@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training State - Academia em Guarulhos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #FF6A00;
+            --dark-black: #000000;
+            --light-gray: #1a1a1a;
+            --text-gray: #cccccc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-black);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-orange);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--primary-orange);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-orange);
+        }
+
+        .cta-button {
+            background: var(--primary-orange);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 106, 0, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 90vh;
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(255,106,0,0.3)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23111" width="1200" height="800"/><circle cx="600" cy="400" r="300" fill="%23FF6A00" opacity="0.1"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--primary-orange);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--primary-orange);
+            margin: 1rem auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--light-gray);
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+
+        .about-visual {
+            background: linear-gradient(45deg, var(--primary-orange), transparent);
+            height: 400px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        /* Professional Cards */
+        .professional {
+            padding: 3rem 5%;
+            background: var(--dark-black);
+        }
+
+        .professional:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .pro-card {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .pro-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pro-photo::after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            opacity: 0.3;
+        }
+
+        .pro-info h3 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .pro-role {
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .pro-info p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .pro-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .specialty-tag {
+            background: var(--primary-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Carousel */
+        .carousel-section {
+            background: var(--light-gray);
+        }
+
+        .carousel-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+        }
+
+        .carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel::-webkit-scrollbar-track {
+            background: var(--dark-black);
+            border-radius: 10px;
+        }
+
+        .carousel::-webkit-scrollbar-thumb {
+            background: var(--primary-orange);
+            border-radius: 10px;
+        }
+
+        .carousel-item {
+            min-width: 400px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--dark-black));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-item::before {
+            content: '🏋️';
+            font-size: 5rem;
+            opacity: 0.2;
+        }
+
+        /* Plans Section */
+        .plans {
+            background: var(--dark-black);
+        }
+
+        .plans-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .plan-card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .plan-card.popular {
+            border-color: var(--primary-orange);
+            transform: scale(1.05);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .plan-name {
+            font-size: 1.8rem;
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            color: var(--text-gray);
+        }
+
+        .popular-badge {
+            background: var(--primary-orange);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--light-gray);
+        }
+
+        .contact-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .map-container {
+            height: 400px;
+            background: var(--dark-black);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-black);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 2px solid var(--primary-orange);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content,
+            .pro-card,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .carousel-item {
+                min-width: 300px;
+            }
+
+            header {
+                padding: 1rem 3%;
+            }
+
+            section {
+                padding: 3rem 3%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">TRAINING <span>STATE</span></div>
+        <nav>
+            <a href="#sobre">Sobre</a>
+            <a href="#profissionais">Profissionais</a>
+            <a href="#estrutura">Estrutura</a>
+            <a href="#contato">Contato</a>
+            <a href="#contato" class="cta-button">Fale Conosco</a>
+        </nav>
+        <div class="mobile-menu">☰</div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transforme seu <span>corpo</span>, fortaleça sua <span>mente</span></h1>
+            <p>Atendimento personalizado com foco no resultado individual. Mais de 11 anos transformando vidas em Guarulhos.</p>
+            <a href="#contato" class="cta-button">Comece Agora</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="about">
+        <h2 class="section-title">Sobre a Training State</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Nossa Missão</h3>
+                <p>A Training State é mais do que uma academia de bairro. Somos uma comunidade dedicada a transformar vidas através do treinamento físico personalizado e do cuidado individual com cada aluno.</p>
+                <p>Com mais de 11 anos de experiência, nossa equipe de profissionais qualificados trabalha com foco no resultado individual, respeitando as limitações e potencializando as capacidades de cada pessoa.</p>
+                <h3>Nossos Valores</h3>
+                <p>Acreditamos no atendimento humanizado, na evolução constante e no compromisso com a saúde integral. Aqui, você não é apenas mais um número – você faz parte da família Training State.</p>
+            </div>
+            <div class="about-visual">💪</div>
+        </div>
+    </section>
+
+    <!-- Professional 1 -->
+    <section id="profissionais" class="professional">
+        <div class="pro-card">
+            <div ><img class="pro-photo" src="./img/Thi.png" alt=""></div>
+            <div class="pro-info">
+                <h3>Thiago Spioni</h3>
+                <div class="pro-role">Personal Trainer & Preparador Físico</div>
+                <p>Com mais de 10 anos de experiência na área de educação física, especializado em treinamento funcional e hipertrofia. Graduado pela Universidade de São Paulo e pós-graduado em Fisiologia do Exercício.</p>
+                <p><strong>Abordagem:</strong> Trabalho com metodologia individualizada, focando nas necessidades específicas de cada aluno. Minha filosofia é construir uma base sólida de movimento antes de avançar para treinos mais intensos.</p>
+                <div class="pro-specialties">
+                    <span class="specialty-tag">Hipertrofia</span>
+                    <span class="specialty-tag">Funcional</span>
+                    <span class="specialty-tag">Reabilitação</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional 2 -->
+    <section class="professional">
+        <div class="pro-card">
+            <div class="pro-photo"><img class="pro-photo" src="./img/San.png" alt=""></div>
+            <div class="pro-info">
+                <h3>Sandro Freitas</h3>
+                <div class="pro-role">Professor de Box</div>
+                <p>Formada em Educação Física com especialização em Nutrição Esportiva. Dedico minha carreira a ajudar pessoas a alcançarem seus objetivos de composição corporal de forma saudável e sustentável.</p>
+                <p><strong>Metodologia:</strong> Combino treinamento resistido, exercícios aeróbicos e orientação nutricional básica para resultados consistentes e duradouros. Cada plano é único e adaptado ao estilo de vida do aluno.</p>
+                <div class="pro-specialties">
+                    <span class="specialty-tag">Emagrecimento</span>
+                    <span class="specialty-tag">Condicionamento</span>
+                    <span class="specialty-tag">Nutrição</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional 3 -->
+    <section class="professional">
+        <div class="pro-card">
+            <div class="pro-photo"><img class="pro-photo re" src="./img/re.png" alt=""></div>
+            <div class="pro-info">
+                <h3>Renata Thais</h3>
+                <div class="pro-role">Especialista de Funcional</div>
+                <p>Ex-atleta profissional com 15 anos de experiência em treinamento de alta performance. Especializado em desenvolver atletas e entusiastas que buscam superar seus limites.</p>
+                <p><strong>Filosofia de Treino:</strong> Foco em periodização científica, prevenção de lesões e desenvolvimento atlético completo. Trabalho com avaliações físicas detalhadas e ajustes constantes no programa de treino.</p>
+                <div class="pro-specialties">
+                    <span class="specialty-tag">Performance</span>
+                    <span class="specialty-tag">Força</span>
+                    <span class="specialty-tag">Mobilidade</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional 4 -->
+    <section class="professional">
+        <div class="pro-card">
+            <div class="pro-photo"></div>
+            <div class="pro-info">
+                <h3>Nome do Profissional 4</h3>
+                <div class="pro-role">Especialista em Terceira Idade</div>
+                <p>Profissional dedicado ao atendimento de público sênior e pessoas com necessidades especiais. Formação em Fisioterapia e Educação Física, com foco em qualidade de vida e longevidade ativa.</p>
+                <p><strong>Abordagem Terapêutica:</strong> Exercícios de baixo impacto, fortalecimento muscular progressivo e trabalho de equilíbrio. Priorizo a segurança e o bem-estar, sempre respeitando as limitações individuais.</p>
+                <div class="pro-specialties">
+                    <span class="specialty-tag">Terceira Idade</span>
+                    <span class="specialty-tag">Reabilitação</span>
+                    <span class="specialty-tag">Equilíbrio</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel Section -->
+    <section id="estrutura" class="carousel-section">
+        <h2 class="section-title">Nossa Estrutura</h2>
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="plans">
+        <h2 class="section-title">Nossos Planos</h2>
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="plan-name">Mensal</div>
+                <div class="plan-price">R$ 89,90</div>
+                <ul class="plan-features">
+                    <li>✓ Acesso ilimitado</li>
+                    <li>✓ Avaliação física</li>
+                    <li>✓ Treino personalizado</li>
+                    <li>✓ Acompanhamento profissional</li>
+                </ul>
+                <a href="#contato" class="cta-button">Escolher Plano</a>
+            </div>
+
+            <div class="plan-card popular">
+                <span class="popular-badge">MAIS POPULAR</span>
+                <div class="plan-name">Trimestral</div>
+                <div class="plan-price">R$ 79,90</div>
+                <ul class="plan-features">
+                    <li>✓ Acesso ilimitado</li>
+                    <li>✓ Avaliação física mensal</li>
+                    <li>✓ Treino personalizado</li>
+                    <li>✓ Acompanhamento profissional</li>
+                    <li>✓ Suporte nutricional básico</li>
+                </ul>
+                <a href="#contato" class="cta-button">Escolher Plano</a>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-name">Anual</div>
+                <div class="plan-price">R$ 69,90</div>
+                <ul class="plan-features">
+                    <li>✓ Acesso ilimitado</li>
+                    <li>✓ Avaliações mensais</li>
+                    <li>✓ Treino personalizado</li>
+                    <li>✓ Acompanhamento VIP</li>
+                    <li>✓ Suporte nutricional</li>
+                    <li>✓ 1 mês grátis</li>
+                </ul>
+                <a href="#contato" class="cta-button">Escolher Plano</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact">
+        <h2 class="section-title">Entre em Contato</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <strong>Endereço</strong><br>
+                        Av Dr Renato de Andrade Maia, 978<br>
+                        Guarulhos - SP, 07114-000
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div>
+                        <strong>WhatsApp</strong><br>
+                        Chame-nos em nosso WhatsApp
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕐</div>
+                    <div>
+                        <strong>Horário de Funcionamento</strong><br>
+                        Segunda a Sexta: 05h às 22h<br>
+                        Sábados: 08h às 18h
+                    </div>
+                </div>
+                <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">
+                    💬 Falar no WhatsApp
+                </a>
+            </div>
+            <div class="map-container">
+                <iframe
+                src="https://www.google.com/maps?q=Av+Dr+Renato+de+Andrade+Maia+978+Guarulhos+SP+07114-000&output=embed"
+                width="600" height="450" style="border:0;"
+                allowfullscreen="" loading="lazy">
+                </iframe>            
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">TRAINING <span>STATE</span></div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/training.state" target="_blank">📷</a>
+                <a href="#" target="_blank">📘</a>
+            </div>
+            <p style="color: var(--text-gray);">
+                © 2025 Training State Academia. Todos os direitos reservados.<br>
+                Mais de 11 anos transformando vidas em Guarulhos.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const nav = document.querySelector('nav');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
